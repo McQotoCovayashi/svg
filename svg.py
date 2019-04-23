@@ -18,7 +18,7 @@ class Svg:
         root = tk.Tk()
         root.withdraw()
         file_name = fdlg.asksaveasfilename(
-            filetypes = [("svgファイル","*.svg")],
+            filetypes = [("svg","*.svg")],
             defaultextension = ".svg",
             initialfile = name)
         try:
@@ -39,7 +39,7 @@ class Svg:
         root = tk.Tk()
         root.withdraw()
         file_name = fdlg.askopenfilename(
-        filetypes = [("svgファイル","*.svg")],
+        filetypes = [("svg","*.svg")],
         defaultextension = ".svg",
         initialfile = "*")
         try:
@@ -84,14 +84,13 @@ class Svg:
             cx, cy, rx, ry, stroke, fill, stroke_width))
 
     def create_path(self, d, stroke="black", fill="transparent", stroke_width=1):
-        #dには、パス描画の命令を記述します。
-        # M (x y)+ : x, y に移動 (Move to)
-        # L (x y)+ : x, y に線を引く (Lineto)
-        # H (x)+ : 水平方向に線を引く (Horizontal lineto)
-        # V (y)+ : 垂直方向に線を引く (Vertical lineto)
-        # S (x1 y1 x y)+ : 制御点(x1, y1)、終点(x, y) とする二次ベジェ曲線 (Shorhand/smooth curveto)
-        # C (x1 y1 x2 y2 x y)+ : 制御点1(x1, y1)、制御点2(x2, y2)、終点(x, y) とする三次ベジェ曲線 (Curveto)
-        # Z : パスを閉じる (Closepath)
+        # M (x y)+ : Setting a point (x,y) to start path line. (Move to)
+        # L (x y)+ : Drawing a line to (x,y).(Lineto)
+        # H (x)+ : Drawing a Horizontal line through x. (Horizontal lineto)
+        # V (y)+ : Drawing a Vertical line through y.(Vertical lineto)
+        # S (x1 y1 x y)+ : Quadratic Bezier curve with control points (x1, y1) and end points (x, y).(Shorhand/smooth curveto)
+        # C (x1 y1 x2 y2 x y)+ : Cubic Bezier curve with control point 1 (x1, y1), control point 2 (x2, y2), end point (x, y)(Curveto)
+        # Z : Closing the path line. (Closepath)
         # ex) d = (("M",(0,1)),("L",(2,3)),("H",(4,5)),("C",(6,7,8,9,10,11)))
         d_value = ""
         for order in d:
@@ -104,11 +103,11 @@ class Svg:
 
     def set_animation(self, attributeName, from_to, dur, repeatCount="indefinite" ):
         #<animate attributeName="x" from="-30" to="400" dur="4s" repeatCount="indefinite" />
-        # 動かしたいオブジェクトの直下に置く
-        # attribute:動かす変数
-        # from_to:変域
-        # dur:動かす時間(秒)
-        # repeatCount:繰り返す回数　"indefinite">無限に繰り返す
+        # Place directly under the object you want to animate.
+        # attribute:Variable to change.
+        # from_to:domain.
+        # dur:Time to animate (seconds).
+        # repeatCount:Repeat count　"indefinite">>Repeat endlessly
         return self.body.append('    <animate attributeName="{0}" from="{1}" to="{2}" dur="{3}s" repeatCount="{4}" />'.format(
             attributeName, from_to[0],from_to[1], dur, repeatCount))
 
@@ -145,12 +144,12 @@ class Svg:
             pass
 
 class Transform:
-        # matrix:変換行列による変形[6引数を用いる汎用1次変換]
-        # translate:移動[tx,ty]
-        # scale:拡大・縮小[sx,sy]．マイナスの値も設定可能．その場合は図形が反転する．
-        # rotate:回転[angle,cx,cy]．なお角度は0〜360を指定．（deg等の単位は不要）
-        # skewX:横方向の傾斜[angle]
-        # skewY:縦方向の傾斜[angle]
+        # matrix:Transformation matrix [general linear transformation using six arguments]
+        # translate:[tx,ty]
+        # scale:[sx,sy]．A negative value can also be set. In that case, the figure is inverted.
+        # rotate:[angle,cx,cy].The angle is 0 to 360.
+        # skewX:Lateral tilt[angle]
+        # skewY:Vertical tilt[angle]
     def __init__(self):
         self.transform = []
     def set_matrix(self, a,b,c,d,e,f):
