@@ -15,12 +15,15 @@ class Svg:
         self.transform= []
 
     def save(self, name = None):
-        root = tk.Tk()
-        root.withdraw()
-        file_name = fdlg.asksaveasfilename(
-            filetypes = [("svg","*.svg")],
-            defaultextension = ".svg",
-            initialfile = name)
+        if name is None:
+            root = tk.Tk()
+            root.withdraw()
+            file_name = fdlg.asksaveasfilename(
+                filetypes = [("svg","*.svg")],
+                defaultextension = ".svg",
+                initialfile = name)
+        else:
+            file_name = name
         try:
             with open(file_name, 'w', encoding = "utf-8") as f: #, newline = "\n"
                 writer = ""
