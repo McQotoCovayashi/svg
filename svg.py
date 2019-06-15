@@ -19,7 +19,7 @@ class Svg:
             root = tk.Tk()
             root.withdraw()
             file_name = fdlg.asksaveasfilename(
-                filetypes = [("svg","*.svg")],
+                filetypes = [("svg flie","*.svg")],
                 defaultextension = ".svg",
                 initialfile = name)
         else:
@@ -60,6 +60,12 @@ class Svg:
     #def conbine(self, svg):
     #def change_order(self, order):
     
+    def create_text(self,content,x,y,font_family="Verdana",font_size=35,stroke = "black",fill= "black"):
+        text = ['<text x="{0}" y="{1}" font-family="{2}" font-size="{3}" stroke="{4}" fill="{5}" >'.format(x,y,font_family,font_size,stroke,fill)]
+        text.extend(content)
+        text.append('</text>')
+        return self.body.extend(text)
+
     def create_line(self,x1,y1,x2,y2,stroke="black",stroke_width=1):
         return self.body.append('<line x1="{0}" y1="{1}" x2="{2}" y2="{3}" stroke="{4}" stroke-width="{5}" />'.format(
             x1, y1, x2, y2, stroke, stroke_width))
