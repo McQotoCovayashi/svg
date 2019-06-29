@@ -13,6 +13,8 @@ class Svg:
         #self.object=[]
         self.body = []
         self.transform= []
+        self.width = None
+        self.height = None
 
     def save(self, name = None):
         if name is None:
@@ -60,9 +62,9 @@ class Svg:
     #def conbine(self, svg):
     #def change_order(self, order):
     
-    def create_text(self,content,x,y,font_family="Verdana",font_size=35,stroke = "black",fill= "black"):
+    def create_text(self,content,x,y,font_family="Noto serif CJK JP",font_size=35,stroke = "black",fill= "black"):
         text = ['<text x="{0}" y="{1}" font-family="{2}" font-size="{3}" stroke="{4}" fill="{5}" >'.format(x,y,font_family,font_size,stroke,fill)]
-        text.extend(content)
+        text.append(content)
         text.append('</text>')
         return self.body.extend(text)
 
